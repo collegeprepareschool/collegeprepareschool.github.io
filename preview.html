@@ -1,0 +1,522 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+
+<title>Classroom UC</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Titan+One&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+<style>
+
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+}
+
+body{
+font-family:'Inter',sans-serif;
+background:#060606;
+overflow-x:hidden;
+color:white;
+}
+
+/* BACKGROUND */
+
+.bg{
+position:fixed;
+inset:0;
+z-index:-5;
+background:
+radial-gradient(circle at top left, rgba(0,119,255,.15), transparent 30%),
+radial-gradient(circle at bottom right, rgba(255,255,255,.08), transparent 30%),
+#050505;
+}
+
+.grid{
+position:fixed;
+inset:0;
+z-index:-4;
+background-image:
+linear-gradient(rgba(255,255,255,.03) 1px, transparent 1px),
+linear-gradient(90deg, rgba(255,255,255,.03) 1px, transparent 1px);
+background-size:40px 40px;
+mask-image:linear-gradient(to bottom, rgba(0,0,0,1), rgba(0,0,0,.3));
+}
+
+/* NAV */
+
+nav{
+width:100%;
+padding:18px 50px;
+display:flex;
+justify-content:space-between;
+align-items:center;
+position:fixed;
+top:0;
+left:0;
+z-index:1000;
+backdrop-filter:blur(16px);
+background:rgba(0,0,0,.35);
+border-bottom:1px solid rgba(255,255,255,.08);
+}
+
+.logo{
+font-family:'Titan One',cursive;
+font-size:2rem;
+letter-spacing:2px;
+}
+
+.links{
+display:flex;
+gap:35px;
+}
+
+.links a{
+text-decoration:none;
+color:#d7d7d7;
+font-weight:600;
+transition:.25s;
+}
+
+.links a:hover{
+color:white;
+}
+
+/* HERO */
+
+.hero{
+min-height:100vh;
+display:flex;
+justify-content:center;
+align-items:center;
+padding:130px 30px 60px;
+}
+
+.hero-card{
+width:100%;
+max-width:1250px;
+background:rgba(255,255,255,.04);
+border:1px solid rgba(255,255,255,.08);
+border-radius:35px;
+padding:50px;
+backdrop-filter:blur(18px);
+box-shadow:0 0 50px rgba(0,0,0,.5);
+display:grid;
+grid-template-columns:1.2fr .8fr;
+gap:40px;
+}
+
+/* LEFT */
+
+.small{
+color:#8e8e8e;
+font-weight:600;
+letter-spacing:3px;
+margin-bottom:20px;
+}
+
+.title{
+font-family:'Titan One',cursive;
+font-size:5.2rem;
+line-height:1;
+margin-bottom:25px;
+}
+
+.time{
+font-size:2.7rem;
+font-weight:700;
+margin-bottom:20px;
+color:#fff;
+}
+
+.typing{
+font-size:1.6rem;
+font-weight:700;
+color:#cfcfcf;
+height:40px;
+margin-bottom:30px;
+}
+
+.cursor{
+display:inline-block;
+animation:blink .8s infinite;
+}
+
+@keyframes blink{
+50%{
+opacity:0;
+}
+}
+
+.desc{
+font-size:1.08rem;
+line-height:1.9;
+color:#b6b6b6;
+max-width:650px;
+margin-bottom:35px;
+}
+
+.buttons{
+display:flex;
+gap:18px;
+flex-wrap:wrap;
+}
+
+.btn{
+padding:15px 28px;
+border-radius:16px;
+border:none;
+font-weight:700;
+cursor:pointer;
+transition:.25s;
+font-size:1rem;
+}
+
+.btn-main{
+background:white;
+color:black;
+}
+
+.btn-main:hover{
+transform:translateY(-3px);
+}
+
+.btn-alt{
+background:rgba(255,255,255,.08);
+color:white;
+border:1px solid rgba(255,255,255,.1);
+}
+
+.btn-alt:hover{
+background:rgba(255,255,255,.14);
+}
+
+/* RIGHT */
+
+.right{
+display:flex;
+justify-content:center;
+align-items:center;
+}
+
+.carousel{
+width:100%;
+height:500px;
+position:relative;
+overflow:hidden;
+border-radius:28px;
+border:1px solid rgba(255,255,255,.08);
+}
+
+.slide{
+position:absolute;
+inset:0;
+opacity:0;
+transition:1s;
+}
+
+.slide.active{
+opacity:1;
+}
+
+.slide img{
+width:100%;
+height:100%;
+object-fit:cover;
+filter:brightness(.6);
+}
+
+.overlay{
+position:absolute;
+bottom:0;
+left:0;
+width:100%;
+padding:35px;
+background:linear-gradient(to top, rgba(0,0,0,.85), transparent);
+}
+
+.popular{
+font-size:.8rem;
+letter-spacing:2px;
+color:#a5a5a5;
+margin-bottom:8px;
+font-weight:700;
+}
+
+.game-title{
+font-family:'Titan One',cursive;
+font-size:2.2rem;
+}
+
+.dots{
+position:absolute;
+bottom:18px;
+right:20px;
+display:flex;
+gap:10px;
+z-index:5;
+}
+
+.dot{
+width:11px;
+height:11px;
+border-radius:50%;
+background:rgba(255,255,255,.35);
+}
+
+.dot.active{
+background:white;
+}
+
+/* FOOTER */
+
+footer{
+padding:30px;
+text-align:center;
+color:#7c7c7c;
+border-top:1px solid rgba(255,255,255,.06);
+}
+
+/* MOBILE */
+
+@media(max-width:1000px){
+
+.hero-card{
+grid-template-columns:1fr;
+}
+
+.title{
+font-size:3.7rem;
+}
+
+.carousel{
+height:380px;
+}
+
+}
+
+@media(max-width:600px){
+
+nav{
+padding:18px 20px;
+}
+
+.links{
+gap:18px;
+font-size:.9rem;
+}
+
+.hero-card{
+padding:28px;
+border-radius:24px;
+}
+
+.title{
+font-size:2.8rem;
+}
+
+.time{
+font-size:2rem;
+}
+
+.typing{
+font-size:1.1rem;
+}
+
+.carousel{
+height:280px;
+}
+
+}
+
+</style>
+</head>
+<body>
+
+<div class="bg"></div>
+<div class="grid"></div>
+
+<nav>
+<div class="logo">Classroom UC</div>
+
+<div class="links">
+<a href="#">Home</a>
+<a href="#">Games</a>
+<a href="#">Apps</a>
+</div>
+</nav>
+
+<section class="hero">
+
+<div class="hero-card">
+
+<div class="left">
+
+<div class="small">UNBLOCKED METRO</div>
+
+<div class="title">
+CLASSROOM<br>
+UC
+</div>
+
+<div class="time" id="clock">00:00:00</div>
+
+<div class="typing">
+<span id="typed"></span><span class="cursor">|</span>
+</div>
+
+<div class="desc">
+A futuristic unblocked gaming platform with instant launches,
+modern design, smooth fullscreen support, and the most popular
+games all in one clean metro-inspired experience.
+</div>
+
+<div class="buttons">
+<button class="btn btn-main">Play Now</button>
+<button class="btn btn-alt">Browse Games</button>
+</div>
+
+</div>
+
+<div class="right">
+
+<div class="carousel">
+
+<div class="slide active">
+<img src="https://images.unsplash.com/photo-1542751371-adc38448a05e?q=80&w=1800&auto=format&fit=crop">
+
+<div class="overlay">
+<div class="popular">MOST POPULAR</div>
+<div class="game-title">Retro Bowl</div>
+</div>
+</div>
+
+<div class="slide">
+<img src="https://images.unsplash.com/photo-1511512578047-dfb367046420?q=80&w=1800&auto=format&fit=crop">
+
+<div class="overlay">
+<div class="popular">MOST POPULAR</div>
+<div class="game-title">Drift Hunters</div>
+</div>
+</div>
+
+<div class="slide">
+<img src="https://images.unsplash.com/photo-1493711662062-fa541adb3fc8?q=80&w=1800&auto=format&fit=crop">
+
+<div class="overlay">
+<div class="popular">MOST POPULAR</div>
+<div class="game-title">Minecraft</div>
+</div>
+</div>
+
+<div class="dots">
+<div class="dot active"></div>
+<div class="dot"></div>
+<div class="dot"></div>
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+</section>
+
+<footer>
+© 2026 Classroom UC • Metro UI
+</footer>
+
+<script>
+
+/* CLOCK */
+
+function updateClock(){
+
+const now = new Date();
+
+let h = now.getHours().toString().padStart(2,"0");
+let m = now.getMinutes().toString().padStart(2,"0");
+let s = now.getSeconds().toString().padStart(2,"0");
+
+document.getElementById("clock").innerText = `${h}:${m}:${s}`;
+
+}
+
+setInterval(updateClock,1000);
+updateClock();
+
+/* TYPING */
+
+const text = "Welcome to the Metro";
+const typed = document.getElementById("typed");
+
+let i = 0;
+let deleting = false;
+
+function loop(){
+
+if(!deleting){
+
+typed.innerHTML = text.substring(0,i);
+i++;
+
+if(i > text.length){
+deleting = true;
+setTimeout(loop,1200);
+return;
+}
+
+}else{
+
+typed.innerHTML = text.substring(0,i);
+i--;
+
+if(i < 0){
+deleting = false;
+}
+
+}
+
+setTimeout(loop,deleting ? 55 : 100);
+
+}
+
+loop();
+
+/* CAROUSEL */
+
+const slides = document.querySelectorAll(".slide");
+const dots = document.querySelectorAll(".dot");
+
+let current = 0;
+
+function showSlide(index){
+
+slides.forEach(slide => slide.classList.remove("active"));
+dots.forEach(dot => dot.classList.remove("active"));
+
+slides[index].classList.add("active");
+dots[index].classList.add("active");
+
+}
+
+setInterval(()=>{
+
+current++;
+
+if(current >= slides.length){
+current = 0;
+}
+
+showSlide(current);
+
+},4000);
+
+</script>
+
+</body>
+</html>
